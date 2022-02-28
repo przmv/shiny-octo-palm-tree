@@ -11,7 +11,7 @@ const (
 	invalidString = `aaa-bbb-ccc-ddd-eee-fff`
 )
 
-var testCases = []struct {
+var validityTestCases = []struct {
 	String  string
 	IsValid bool
 }{
@@ -26,7 +26,7 @@ var testCases = []struct {
 }
 
 func TestTestValidity(t *testing.T) {
-	for _, tc := range testCases {
+	for _, tc := range validityTestCases {
 		s := tc.String
 		expected := tc.IsValid
 		got := regexp.TestValidity(s)
