@@ -35,3 +35,35 @@ func TestTestValidity(t *testing.T) {
 		}
 	}
 }
+
+var averageNumberTestCases = []struct {
+	String  string
+	Error   error
+	Average float64
+}{
+	{
+		String:  validString,
+		Error:   nil,
+		Average: 42.333333333333336,
+	},
+	{
+		String:  invalidString,
+		Error:   regexp.InvalidStringError,
+		Average: 0,
+	},
+}
+
+func TestAverageNumber(t *testing.T) {
+	for _, tc := range averageNumberTestCases {
+		s := tc.String
+		expected := tc.Average
+		expectedErr := tc.Error
+		got, err := regexp.AverageNumber(s)
+		if expected != got {
+			t.Errorf("%q: expected %v, got %v", s, expected, got)
+		}
+		if expectedErr != err {
+			t.Errorf("%q: expected error %v, got %v", s, expectedErr, err)
+		}
+	}
+}
