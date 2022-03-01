@@ -53,3 +53,11 @@ func WholeStrory(s string) (string, error) {
 	a := words.FindAllString(s, -1)
 	return strings.Join(a, " "), nil
 }
+
+// StoryStats returns the shortest word, the longest word, the average word
+// length, the list (or empty list) of all words from the story that have the
+// length the same as the average length rounded up and down.
+func StoryStats(s string) (shortest, longest string, avg float64, asAvg []string, err error) {
+	// TODO
+	return
+}
