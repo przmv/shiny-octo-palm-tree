@@ -2,9 +2,13 @@ package regexp
 
 import (
 	"errors"
+	"math"
 	"regexp"
+	sortpkg "sort"
 	"strconv"
 	"strings"
+
+	"githib.com/przmv/shiny-octo-palm-tree/sort"
 )
 
 var (
@@ -58,6 +62,24 @@ func WholeStrory(s string) (string, error) {
 // length, the list (or empty list) of all words from the story that have the
 // length the same as the average length rounded up and down.
 func StoryStats(s string) (shortest, longest string, avg float64, asAvg []string, err error) {
-	// TODO
+	if !TestValidity(s) {
+		err = InvalidStringError
+		return
+	}
+	a := words.FindAllString(s, -1)
+	sortpkg.Sort(sort.ByLength(a))
+	shortest = a[0]
+	longest = a[len(a)-1]
+	sum := 0.0
+	m := make(map[float64][]string)
+	for _, s := range a {
+		n := float64(len(s))
+		sum += n
+		m[n] = append(m[n], s)
+	}
+	avg = sum / (float64(len(a)))
+	ceil := math.Ceil(avg)
+	floor := math.Floor(avg)
+	asAvg = append(m[ceil], m[floor]...)
 	return
 }
