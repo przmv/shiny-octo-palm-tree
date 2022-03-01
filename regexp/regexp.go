@@ -4,15 +4,19 @@ import (
 	"errors"
 	"regexp"
 	"strconv"
+	"strings"
 )
 
 var (
 	// Regular expression to match a sequence of numbers followed by dash
 	// followed by text.
-	re      = regexp.MustCompile(`^(?:[[:digit:]]+-[[:alpha:]]+-?)+[^-]$`)
+	re = regexp.MustCompile(`^(?:[[:digit:]]+-[[:alpha:]]+-?)+[^-]$`)
 
 	// Regular expression to match numbers.
 	numbers = regexp.MustCompile(`[[:digit:]]+`)
+
+	// Regular expression to match words.
+	words = regexp.MustCompile(`[[:alpha:]]+`)
 )
 
 var InvalidStringError = errors.New("invalid string")
@@ -43,6 +47,9 @@ func AverageNumber(s string) (float64, error) {
 // WholeStrory returns a text that is composed from all the text words
 // separated by spaces.
 func WholeStrory(s string) (string, error) {
-	// TODO
-	return "", nil
+	if !TestValidity(s) {
+		return "", InvalidStringError
+	}
+	a := words.FindAllString(s, -1)
+	return strings.Join(a, " "), nil
 }
