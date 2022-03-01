@@ -3,11 +3,17 @@ package regexp
 import (
 	"errors"
 	"regexp"
+	"strconv"
 )
 
-// Regular expression to match a sequence of numbers followed by dash followed
-// by text.
-var re = regexp.MustCompile(`^(?:[[:digit:]]+-[[:alpha:]]+-?)+[^-]$`)
+var (
+	// Regular expression to match a sequence of numbers followed by dash
+	// followed by text.
+	re      = regexp.MustCompile(`^(?:[[:digit:]]+-[[:alpha:]]+-?)+[^-]$`)
+
+	// Regular expression to match numbers.
+	numbers = regexp.MustCompile(`[[:digit:]]+`)
+)
 
 var InvalidStringError = errors.New("invalid string")
 
@@ -18,6 +24,18 @@ func TestValidity(s string) bool {
 
 // AverageNumber returns an average number from all the numbers from the string s.
 func AverageNumber(s string) (float64, error) {
-	// TODO
-	return 0, nil
+	if !TestValidity(s) {
+		return 0, InvalidStringError
+	}
+	a := numbers.FindAllString(s, -1)
+	sum := 0
+	for _, s := range a {
+		i, err := strconv.Atoi(s)
+		if err != nil {
+			return 0, err
+		}
+		sum += i
+	}
+	avg := (float64(sum)) / (float64(len(a)))
+	return avg, nil
 }
