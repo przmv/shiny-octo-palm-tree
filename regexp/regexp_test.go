@@ -68,20 +68,20 @@ func TestAverageNumber(t *testing.T) {
 	}
 }
 
-var wholeStoryTestCases = []struct{
+var wholeStoryTestCases = []struct {
 	String string
-	Error error
-	Text string
+	Error  error
+	Text   string
 }{
 	{
 		String: validString,
-		Error: nil,
-		Text: "ab caba haha",
+		Error:  nil,
+		Text:   "ab caba haha",
 	},
 	{
 		String: invalidString,
-		Error: regexp.InvalidStringError,
-		Text: "",
+		Error:  regexp.InvalidStringError,
+		Text:   "",
 	},
 }
 
