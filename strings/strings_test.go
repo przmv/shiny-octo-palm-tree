@@ -1,6 +1,8 @@
 package strings_test
 
 import (
+	"bufio"
+	"os"
 	"reflect"
 	"testing"
 
@@ -13,27 +15,24 @@ const (
 	invalidString = `aaa-bbb-ccc-ddd-eee-fff`
 )
 
-var validityTestCases = []struct {
-	String  string
-	IsValid bool
-}{
-	{
-		String:  validString,
-		IsValid: true,
-	},
-	{
-		String:  invalidString,
-		IsValid: false,
-	},
+var validityTestCases = map[bool]string{
+	true:  "../testdata/valid.txt",
+	false: "../testdata/invalid.txt",
 }
 
 func TestTestValidity(t *testing.T) {
-	for _, tc := range validityTestCases {
-		s := tc.String
-		expected := tc.IsValid
-		got := strings.TestValidity(s)
-		if expected != got {
-			t.Errorf("%q: expected %v, got %v", s, expected, got)
+	for expected, fileName := range validityTestCases {
+		f, err := os.Open(fileName)
+		if err != nil {
+			t.Error(err)
+		}
+		scanner := bufio.NewScanner(f)
+		for scanner.Scan() {
+			s := scanner.Text()
+			got := strings.TestValidity(s)
+			if expected != got {
+				t.Errorf("%q: expected %v, got %v", s, expected, got)
+			}
 		}
 	}
 }
