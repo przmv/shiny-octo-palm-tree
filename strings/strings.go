@@ -76,17 +76,11 @@ func WholeStory(s string) (string, error) {
 // length, the list (or empty list) of all words from the story that have the
 // length the same as the average length rounded up and down.
 func StoryStats(s string) (shortest, longest string, avg float64, asAvg []string, err error) {
-	if !TestValidity(s) {
-		err = errors.InvalidStringError
+	s, err = WholeStory(s)
+	if err != nil {
 		return
 	}
-	a := strings.Split(s, "-")
-	words := make([]string, 0)
-	for i, s := range a {
-		if i%2 != 0 {
-			words = append(words, s)
-		}
-	}
+	words := strings.Fields(s)
 	sortpkg.Sort(sort.ByLength(words))
 	shortest = words[0]
 	longest = words[len(words)-1]
