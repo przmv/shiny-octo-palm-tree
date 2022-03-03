@@ -3,6 +3,7 @@ package strings_test
 import (
 	"testing"
 
+	"githib.com/przmv/shiny-octo-palm-tree/errors"
 	"githib.com/przmv/shiny-octo-palm-tree/strings"
 )
 
@@ -32,6 +33,38 @@ func TestTestValidity(t *testing.T) {
 		got := strings.TestValidity(s)
 		if expected != got {
 			t.Errorf("%q: expected %v, got %v", s, expected, got)
+		}
+	}
+}
+
+var averageNumberTestCases = []struct {
+	String  string
+	Error   error
+	Average float64
+}{
+	{
+		String:  validString,
+		Error:   nil,
+		Average: 42.333333333333336,
+	},
+	{
+		String:  invalidString,
+		Error:   errors.InvalidStringError,
+		Average: 0,
+	},
+}
+
+func TestAverageNumber(t *testing.T) {
+	for _, tc := range averageNumberTestCases {
+		s := tc.String
+		expected := tc.Average
+		expectedErr := tc.Error
+		got, err := strings.AverageNumber(s)
+		if expected != got {
+			t.Errorf("%q: expected %v, got %v", s, expected, got)
+		}
+		if expectedErr != err {
+			t.Errorf("%q: expected error %v, got %v", s, expectedErr, err)
 		}
 	}
 }

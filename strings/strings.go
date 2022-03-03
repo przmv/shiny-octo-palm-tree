@@ -28,3 +28,9 @@ func TestValidity(s string) bool {
 	}
 	return true
 }
+
+// AverageNumber returns an average number from all the numbers from the string s.
+func AverageNumber(s string) (float64, error) {
+	// TODO
+	return 0, nil
+}
