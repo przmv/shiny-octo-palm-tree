@@ -52,3 +52,10 @@ func AverageNumber(s string) (float64, error) {
 	avg := (float64(sum)) / (float64(n))
 	return avg, nil
 }
+
+// WholeStrory returns a text that is composed from all the text words
+// separated by spaces.
+func WholeStrory(s string) (string, error) {
+	// TODO
+	return "", nil
+}

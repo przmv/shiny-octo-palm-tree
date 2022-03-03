@@ -68,3 +68,35 @@ func TestAverageNumber(t *testing.T) {
 		}
 	}
 }
+
+var wholeStoryTestCases = []struct {
+	String string
+	Error  error
+	Text   string
+}{
+	{
+		String: validString,
+		Error:  nil,
+		Text:   "ab caba haha",
+	},
+	{
+		String: invalidString,
+		Error:  errors.InvalidStringError,
+		Text:   "",
+	},
+}
+
+func TestWholeStory(t *testing.T) {
+	for _, tc := range wholeStoryTestCases {
+		s := tc.String
+		expected := tc.Text
+		expectedErr := tc.Error
+		got, err := strings.WholeStrory(s)
+		if expected != got {
+			t.Errorf("%q: expected %q, got %q", s, expected, got)
+		}
+		if expectedErr != err {
+			t.Errorf("%q: expected error %v, got %v", s, expectedErr, err)
+		}
+	}
+}
