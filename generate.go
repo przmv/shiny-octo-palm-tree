@@ -10,6 +10,7 @@ import (
 
 const (
 	maxItems      = 100
+	minItems      = 2
 	maxItemLength = 32
 )
 
@@ -28,6 +29,9 @@ var generateFuncs = map[bool]genFunc{
 func generateValid() string {
 	rand.Seed(time.Now().UnixNano())
 	n := rand.Intn(maxItems)
+	if n < minItems {
+		n = minItems
+	}
 	parts := make([]string, n)
 	for i := range parts {
 		arr := letters
