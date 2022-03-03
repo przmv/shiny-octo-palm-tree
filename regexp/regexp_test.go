@@ -4,6 +4,7 @@ import (
 	"reflect"
 	"testing"
 
+	"githib.com/przmv/shiny-octo-palm-tree/errors"
 	"githib.com/przmv/shiny-octo-palm-tree/regexp"
 )
 
@@ -49,7 +50,7 @@ var averageNumberTestCases = []struct {
 	},
 	{
 		String:  invalidString,
-		Error:   regexp.InvalidStringError,
+		Error:   errors.InvalidStringError,
 		Average: 0,
 	},
 }
@@ -81,7 +82,7 @@ var wholeStoryTestCases = []struct {
 	},
 	{
 		String: invalidString,
-		Error:  regexp.InvalidStringError,
+		Error:  errors.InvalidStringError,
 		Text:   "",
 	},
 }
@@ -119,7 +120,7 @@ var storyStatsTestCases = []struct {
 	},
 	{
 		String: invalidString,
-		Error:  regexp.InvalidStringError,
+		Error:  errors.InvalidStringError,
 	},
 }
 

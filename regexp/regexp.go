@@ -1,13 +1,13 @@
 package regexp
 
 import (
-	"errors"
 	"math"
 	"regexp"
 	sortpkg "sort"
 	"strconv"
 	"strings"
 
+	"githib.com/przmv/shiny-octo-palm-tree/errors"
 	"githib.com/przmv/shiny-octo-palm-tree/sort"
 )
 
@@ -23,8 +23,6 @@ var (
 	words = regexp.MustCompile(`[[:alpha:]]+`)
 )
 
-var InvalidStringError = errors.New("invalid string")
-
 // TestValidity checks if a string matches a regular expression pattern.
 func TestValidity(s string) bool {
 	return re.MatchString(s)
@@ -33,7 +31,7 @@ func TestValidity(s string) bool {
 // AverageNumber returns an average number from all the numbers from the string s.
 func AverageNumber(s string) (float64, error) {
 	if !TestValidity(s) {
-		return 0, InvalidStringError
+		return 0, errors.InvalidStringError
 	}
 	a := numbers.FindAllString(s, -1)
 	sum := 0
@@ -52,7 +50,7 @@ func AverageNumber(s string) (float64, error) {
 // separated by spaces.
 func WholeStrory(s string) (string, error) {
 	if !TestValidity(s) {
-		return "", InvalidStringError
+		return "", errors.InvalidStringError
 	}
 	a := words.FindAllString(s, -1)
 	return strings.Join(a, " "), nil
@@ -63,7 +61,7 @@ func WholeStrory(s string) (string, error) {
 // length the same as the average length rounded up and down.
 func StoryStats(s string) (shortest, longest string, avg float64, asAvg []string, err error) {
 	if !TestValidity(s) {
-		err = InvalidStringError
+		err = errors.InvalidStringError
 		return
 	}
 	a := words.FindAllString(s, -1)
