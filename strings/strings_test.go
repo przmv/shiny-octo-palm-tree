@@ -1,6 +1,7 @@
 package strings_test
 
 import (
+	"reflect"
 	"testing"
 
 	"githib.com/przmv/shiny-octo-palm-tree/errors"
@@ -97,6 +98,50 @@ func TestWholeStory(t *testing.T) {
 		}
 		if expectedErr != err {
 			t.Errorf("%q: expected error %v, got %v", s, expectedErr, err)
+		}
+	}
+}
+
+var storyStatsTestCases = []struct {
+	String   string
+	Error    error
+	Shortest string
+	Longest  string
+	Avg      float64
+	AsAvg    []string
+}{
+	{
+		String:   validString,
+		Error:    nil,
+		Shortest: "ab",
+		Longest:  "haha",
+		Avg:      3.3333333333333335,
+		AsAvg:    []string{"caba", "haha"},
+	},
+	{
+		String: invalidString,
+		Error:  errors.InvalidStringError,
+	},
+}
+
+func TestStoryStats(t *testing.T) {
+	for _, tc := range storyStatsTestCases {
+		s := tc.String
+		shortest, longest, avg, asAvg, err := strings.StoryStats(s)
+		if shortest != tc.Shortest {
+			t.Errorf("%q: expected %q, got %q", s, tc.Shortest, shortest)
+		}
+		if longest != tc.Longest {
+			t.Errorf("%q: expected %q, got %q", s, tc.Longest, longest)
+		}
+		if avg != tc.Avg {
+			t.Errorf("%q: expected %v, got %v", s, tc.Avg, avg)
+		}
+		if !reflect.DeepEqual(asAvg, tc.AsAvg) {
+			t.Errorf("%q: expected %v, got %v", s, tc.AsAvg, asAvg)
+		}
+		if err != tc.Error {
+			t.Errorf("%q: expected error %v, got %v", s, tc.Error, err)
 		}
 	}
 }
