@@ -14,7 +14,7 @@ import (
 var (
 	// Regular expression to match a sequence of numbers followed by dash
 	// followed by text.
-	re = regexp.MustCompile(`^(?:[[:digit:]]+-[[:alpha:]]+-?)+[^-]$`)
+	re = regexp.MustCompile(`^[[:digit:]]+-[[:alpha:]]+(?:-[[:digit:]]+(?:-[[:alpha:]]+)?)*$`)
 
 	// Regular expression to match numbers.
 	numbers = regexp.MustCompile(`[[:digit:]]+`)
