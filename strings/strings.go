@@ -56,6 +56,15 @@ func AverageNumber(s string) (float64, error) {
 // WholeStrory returns a text that is composed from all the text words
 // separated by spaces.
 func WholeStrory(s string) (string, error) {
-	// TODO
-	return "", nil
+	if !TestValidity(s) {
+		return "", errors.InvalidStringError
+	}
+	a := strings.Split(s, "-")
+	words := make([]string, 0)
+	for i, s := range a {
+		if i%2 != 0 {
+			words = append(words, s)
+		}
+	}
+	return strings.Join(words, " "), nil
 }
