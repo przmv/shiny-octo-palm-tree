@@ -1,11 +1,14 @@
 package strings
 
 import (
+	"math"
+	sortpkg "sort"
 	"strconv"
 	"strings"
 	"unicode"
 
 	"githib.com/przmv/shiny-octo-palm-tree/errors"
+	"githib.com/przmv/shiny-octo-palm-tree/sort"
 )
 
 // TestValidity checks if a string complies with the format.
@@ -73,6 +76,30 @@ func WholeStrory(s string) (string, error) {
 // length, the list (or empty list) of all words from the story that have the
 // length the same as the average length rounded up and down.
 func StoryStats(s string) (shortest, longest string, avg float64, asAvg []string, err error) {
-	// TODO
+	if !TestValidity(s) {
+		err = errors.InvalidStringError
+		return
+	}
+	a := strings.Split(s, "-")
+	words := make([]string, 0)
+	for i, s := range a {
+		if i%2 != 0 {
+			words = append(words, s)
+		}
+	}
+	sortpkg.Sort(sort.ByLength(words))
+	shortest = words[0]
+	longest = words[len(words)-1]
+	sum := 0.0
+	m := make(map[float64][]string)
+	for _, s := range words {
+		n := float64(len(s))
+		sum += n
+		m[n] = append(m[n], s)
+	}
+	avg = sum / (float64(len(words)))
+	ceil := math.Ceil(avg)
+	floor := math.Floor(avg)
+	asAvg = append(m[ceil], m[floor]...)
 	return
 }
