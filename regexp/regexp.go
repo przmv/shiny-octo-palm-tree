@@ -46,9 +46,9 @@ func AverageNumber(s string) (float64, error) {
 	return avg, nil
 }
 
-// WholeStrory returns a text that is composed from all the text words
+// WholeStory returns a text that is composed from all the text words
 // separated by spaces.
-func WholeStrory(s string) (string, error) {
+func WholeStory(s string) (string, error) {
 	if !TestValidity(s) {
 		return "", errors.InvalidStringError
 	}

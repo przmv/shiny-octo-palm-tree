@@ -92,7 +92,7 @@ func TestWholeStory(t *testing.T) {
 		s := tc.String
 		expected := tc.Text
 		expectedErr := tc.Error
-		got, err := strings.WholeStrory(s)
+		got, err := strings.WholeStory(s)
 		if expected != got {
 			t.Errorf("%q: expected %q, got %q", s, expected, got)
 		}
